@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/runtime-deps:9.0.2-alpine3.21-extra AS build
 
-# renovate: depName=Sonarr/Sonarr
+# renovate: datasource=github-releases depName=Sonarr/Sonarr
 ARG VERSION=v4.0.13.2932
 
 WORKDIR /workdir
