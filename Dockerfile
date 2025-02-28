@@ -18,7 +18,7 @@ RUN apk add --no-cache \
     gpg --verify /tmp/catatonit.x86_64.asc /tmp/catatonit.x86_64 && \
     mv /tmp/catatonit.x86_64 usr/bin/catatonit && \
     chmod +x usr/bin/catatonit && \
-    curl -fsSL "https://github.com/Sonarr/Sonarr/releases/download/${VERSION}/Sonarr.main.${SONARR_VERSION#v}.linux-x64.tar.gz" | \
+    curl -fsSL "https://github.com/Sonarr/Sonarr/releases/download/${SONARR_VERSION}/Sonarr.main.${SONARR_VERSION#v}.linux-x64.tar.gz" | \
     tar xvz --strip-components=1 --directory=app/bin && \
     printf "UpdateMethod=docker\nBranch=%s\nPackageVersion=%s\nPackageAuthor=[d4rkfella](https://github.com/d4rkfella)\n" "main" "${SONARR_VERSION#v}" > app/package_info && \
     rm -rf app/bin/Sonarr.Update
