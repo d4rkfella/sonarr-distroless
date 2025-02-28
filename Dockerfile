@@ -26,12 +26,14 @@ RUN apk add --no-cache \
 FROM cgr.dev/chainguard/wolfi-base:latest@sha256:9c86299eaeb27bfec41728fc56a19fa00656c001c0f01228b203379e5ac3ef28
 
 RUN apk add --no-cache \
+        readline \
         tzdata \
         icu-libs \
         sqlite-libs && \
     echo "sonarr:x:65532:65532::/nonexistent:/sbin/nologin" > /etc/passwd && \
     echo "sonarr:x:65532:" > /etc/group && \
-    apk del --no-cache --purge wolfi-base busybox wolfi-keys apk-tools
+    find / \( -path /proc -o -path /sys -o -path /dev \) -prune -o -type l -exec sh -c 'if [ "$(readlink "$1")" = "/bin/busybox" ]; then echo "$1"; fi' _ {} \; | xargs rm && \
+    apk del --no-cache --purge wolfi-base busybox wolfi-keys apk-tools readline
 
 COPY --from=build /rootfs /
 
