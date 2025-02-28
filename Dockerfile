@@ -25,7 +25,7 @@ RUN apk add --no-cache \
 FROM cgr.dev/chainguard/wolfi-base:latest@sha256:9c86299eaeb27bfec41728fc56a19fa00656c001c0f01228b203379e5ac3ef28
 
 RUN apk add --no-cache \
-        icue-libs \
+        icu-libs \
         icu-data-full \
         sqlite-libs && \
     echo "sonarr:x:65532:65532::/nonexistent:/sbin/nologin" > /etc/passwd && \
