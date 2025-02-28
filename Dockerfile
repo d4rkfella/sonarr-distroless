@@ -31,7 +31,7 @@ RUN apk add --no-cache \
         sqlite-libs && \
     echo "sonarr:x:65532:65532::/nonexistent:/sbin/nologin" > /etc/passwd && \
     echo "sonarr:x:65532:" > /etc/group && \
-    apk del --no-cache --purge wolfi-base wolfi-keys busybox apk-tools
+    apk del --purge wolfi-base wolfi-keys apk-tools
 
 COPY --from=build /rootfs /
 
