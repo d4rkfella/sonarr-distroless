@@ -21,19 +21,11 @@ RUN apk add --no-cache \
     curl -fsSL "https://github.com/Sonarr/Sonarr/releases/download/${SONARR_VERSION}/Sonarr.main.${SONARR_VERSION#v}.linux-x64.tar.gz" | \
     tar xvz --strip-components=1 --directory=app/bin && \
     printf "UpdateMethod=docker\nBranch=%s\nPackageVersion=%s\nPackageAuthor=[d4rkfella](https://github.com/d4rkfella)\n" "main" "${SONARR_VERSION#v}" > app/package_info && \
-    rm -rf app/bin/Sonarr.Update
+    rm -rf app/bin/Sonarr.Update && \
+    echo "sonarr:x:65532:65532::/nonexistent:/sbin/nologin" > etc/passwd && \
+    echo "sonarr:x:65532:" > etc/group
 
-FROM cgr.dev/chainguard/wolfi-base:latest@sha256:9c86299eaeb27bfec41728fc56a19fa00656c001c0f01228b203379e5ac3ef28
-
-RUN apk add --no-cache \
-        readline \
-        tzdata \
-        icu-libs \
-        sqlite-libs && \
-    echo "sonarr:x:65532:65532::/nonexistent:/sbin/nologin" > /etc/passwd && \
-    echo "sonarr:x:65532:" > /etc/group && \
-    find / \( -path /proc -o -path /sys -o -path /dev \) -prune -o -type l -exec sh -c 'if [ "$(readlink "$1")" = "/bin/busybox" ]; then echo "$1"; fi' _ {} \; | xargs rm && \
-    apk del --no-cache --purge wolfi-base busybox wolfi-keys apk-tools readline
+FROM ghcr.io/d4rkfella/wolfi-dotnet-runtime-deps:1.0.0@sha256:08e0cf4265189a6787f0ac92fdfb56142e9110edba55ade13f0085b4f64aba17
 
 COPY --from=build /rootfs /
 
