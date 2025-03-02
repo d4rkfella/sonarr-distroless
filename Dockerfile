@@ -6,10 +6,7 @@ ARG SONARR_VERSION=v4.0.13.2932
 WORKDIR /rootfs
 
 RUN apk add --no-cache \
-        curl \
-        gpg \
-        gpg-agent \
-        gnupg-dirmngr && \
+        curl && \
     mkdir -p app/bin etc && \
     curl -fsSL "https://github.com/Sonarr/Sonarr/releases/download/${SONARR_VERSION}/Sonarr.main.${SONARR_VERSION#v}.linux-x64.tar.gz" | \
     tar xvz --strip-components=1 --directory=app/bin && \
