@@ -2,8 +2,6 @@ FROM cgr.dev/chainguard/wolfi-base:latest@sha256:9c86299eaeb27bfec41728fc56a19fa
 
 # renovate: datasource=github-releases depName=Sonarr/Sonarr
 ARG SONARR_VERSION=v4.0.13.2932
-# renovate: datasource=github-releases depName=openSUSE/catatonit
-ARG CATATONIT_VERSION=v0.2.1
 
 WORKDIR /rootfs
 
@@ -12,12 +10,7 @@ RUN apk add --no-cache \
         gpg \
         gpg-agent \
         gnupg-dirmngr && \
-    mkdir -p app/bin usr/bin etc && \
-    curl -fsSLO --output-dir /tmp "https://github.com/openSUSE/catatonit/releases/download/${CATATONIT_VERSION}/catatonit.x86_64{,.asc}" && \
-    gpg --keyserver keyserver.ubuntu.com --recv-keys 5F36C6C61B5460124A75F5A69E18AA267DDB8DB4 && \
-    gpg --verify /tmp/catatonit.x86_64.asc /tmp/catatonit.x86_64 && \
-    mv /tmp/catatonit.x86_64 usr/bin/catatonit && \
-    chmod +x usr/bin/catatonit && \
+    mkdir -p app/bin etc && \
     curl -fsSL "https://github.com/Sonarr/Sonarr/releases/download/${SONARR_VERSION}/Sonarr.main.${SONARR_VERSION#v}.linux-x64.tar.gz" | \
     tar xvz --strip-components=1 --directory=app/bin && \
     printf "UpdateMethod=docker\nBranch=%s\nPackageVersion=%s\nPackageAuthor=[d4rkfella](https://github.com/d4rkfella)\n" "main" "${SONARR_VERSION#v}" > app/package_info && \
