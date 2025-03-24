@@ -67,8 +67,6 @@ jobs:
       uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6.15.0
       id: build
       with:
-        build-args: |
-            COMMIT_TAG=${{ github.sha }}
         labels: |
           org.opencontainers.image.title=${{ env.IMAGE_NAME }}
           org.opencontainers.image.url=https://ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
