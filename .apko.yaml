@@ -4,8 +4,11 @@ contents:
   repositories:
     - https://packages.wolfi.dev/os
   packages:
+    - wolfi-baselayout
+    - tzdata
     - sonarr
     - catatonit
+work-dir: /usr/lib/Sonarr/bin
 volumes: [ "/config" ]
 accounts:
   groups:
@@ -28,5 +31,5 @@ environment:
   UMASK: "0002"
 entrypoint: 
   command:
-    /usr/bin/catatonit -- /usr/lib/Sonarr/bin/Sonarr
+    catatonit -- Sonarr
 cmd: --nobrowser
